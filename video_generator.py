@@ -58,7 +58,7 @@ class VideoGenerator:
 
         # Overlay GIFs on top of the video
         final_video = CompositeVideoClip(
-            [video_clip, final_gif_clip.set_position((570, 470))]).set_duration(total_duration)
+            [video_clip, final_gif_clip.set_position((270, 350))]).set_duration(total_duration)
         for gif in gif_clips:
             gif.close()
 

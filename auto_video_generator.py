@@ -20,8 +20,18 @@ class AutoVideoGenerator:
         sentances = [sentance+'.' for sentance in re.split(
             r'\.\.\.|\.|\?|\!|\;', ' '.join(paragraphs)) if not sentance == '']
 
-        resulit_paragraphs = sentances
-        resulit_paragraphs[0] = title + '! ' + resulit_paragraphs[0]
+        resulit_paragraphs = [sentance.replace(
+            '&quot', '') for sentance in sentances]
+
+        res = [title + '! ' + resulit_paragraphs[0]]
+        # remove short sentance that are result from splitting
+        for sentance in resulit_paragraphs[1:]:
+            if len(sentance) < 8:
+                res[-1] = res[-1]+sentance
+            else:
+                res.append(sentance)
+        resulit_paragraphs = res
+
         for i, paragraph in enumerate(resulit_paragraphs):
             self.subttitles_generator.create_image_with_text(
                 paragraph, output_path=f"images/paragraphs_output_image{i}.png")

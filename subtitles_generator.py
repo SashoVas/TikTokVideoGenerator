@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 class SubtitlesGenerator:
-    def __init__(self, font_size=60, max_width=1000, padding=10) -> None:
+    def __init__(self, font_size=40, max_width=1000, padding=10) -> None:
         self.font_size = font_size
         self.max_width = max_width
         self.padding = padding
@@ -35,9 +35,10 @@ class SubtitlesGenerator:
         # Calculate image dimensions based on wrapped text
         max_line_width = max(draw.textbbox((0, 0), line, font=font)[
             2] - draw.textbbox((0, 0), line, font=font)[0] for line in wrapped_text)
+        # total_text_height = sum(draw.textbbox((0, 0), line, font=font)[
+        #                        3] - draw.textbbox((0, 0), line, font=font)[1] for line in wrapped_text)
         total_text_height = sum(draw.textbbox((0, 0), line, font=font)[
-                                3] - draw.textbbox((0, 0), line, font=font)[1] for line in wrapped_text)
-
+                                3] for line in wrapped_text)
         # Add padding to the image dimensions
         width = max_line_width + 2 * self.padding
         height = total_text_height + 2 * self.padding + len(wrapped_text)*5
